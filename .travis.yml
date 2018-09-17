@@ -1,0 +1,35 @@
+language: node_js
+node_js: lts/*
+cache:
+  yarn: true
+  directories:
+    - node_modules
+env:
+  global:
+    - ENVIRONMENT=staging
+before_install:
+  - curl -o- -L https://yarnpkg.com/install.sh | bash
+  - export PATH="$HOME/.yarn/bin:$PATH"
+
+jobs:
+  include:
+    - stage: pre-cache
+      script: skip
+
+    - stage: test
+      name: '(angular) spec:browser'
+      script:
+        - lerna run test --scope=angular
+
+    - stage: test
+      name: '(angular) spec:server'
+      script:
+        - lerna run test --scope=angular
+
+    - stage: test
+      name: '(angular) e2e'
+      script: lerna run test --scope=angular
+
+    - stage: test
+      name: '(email)'
+      script: lerna run test --scope=email

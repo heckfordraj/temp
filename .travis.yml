@@ -17,19 +17,22 @@ jobs:
       script: skip
 
     - stage: test
-      name: '(angular) spec:browser'
+      name: '(angular)'
       script:
+        - git fetch origin master:master
+        - lerna ls --since master | grep -q 'angular' || exit 0
         - lerna run test --scope=angular
-
-    - stage: test
-      name: '(angular) spec:server'
-      script:
-        - lerna run test --scope=angular
-
-    - stage: test
-      name: '(angular) e2e'
-      script: lerna run test --scope=angular
 
     - stage: test
       name: '(email)'
-      script: lerna run test --scope=email
+      script:
+        - git fetch origin master:master
+        - lerna ls --since master | grep -q 'email' || exit 0
+        - lerna run test --scope=email
+
+    - stage: test
+      name: '(api)'
+      script:
+        - git fetch origin master:master
+        - lerna ls --since master | grep -q 'api' || exit 0
+        - lerna run test --scope=api

@@ -11,4 +11,11 @@ before_install:
 jobs:
   include:
     - stage: test
-      script: ./script.sh
+      name: (angular)
+      script: ./scripts/angular/test.sh
+    - stage: test
+      name: (api)
+      script: ./scripts/api/test.sh
+    - stage: test
+      name: (email)
+      script: ./scripts/email/test.sh

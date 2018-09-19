@@ -7,15 +7,27 @@ cache:
 before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash
   - export PATH="$HOME/.yarn/bin:$PATH"
-
+env:
+  global:
+    secure: vnYjQlfagENRK+YvYjok1fsG7y/xLVZsvDgzm+vtZA/+HuHORf5Es33s8K+CHmzbycxaNDb8YnSGxNQEZLptLJlbIeMi2RXHq+g/7yIPkjpQhyeUzfEY7ATI2+WQ0RVjlR6oLGf0rjao6gTaRuw3RwKT5PBauxwZmVFa14DsnX7VlwrCoEXlpg354Qzl6QJGDUeZj5mrXFdtgIjsYtyPkCRZmrtIFxh3uubhZp2reyRJPwh5QoN+Mp+PQfxzrC+/mSfLvT0uqSI+M9mTh4AmFUkIh8edbzmq2OFG5AN0UTAXhfiUTVgEedvYtOp7pPYPiMC8oK0F3wHtxR6TM8hGCLWsi3c9H6iKAeTimbaJi31KHQb9HQAtK9mosq5X0VeauEsGinNGIiE7RakUuetG+w1JGjEoHj8WzEN1xvuVUVyFnNtHXwFrK0WkJFvC/Z7fuZRr0AIvUCHHxRkjrPabLdwzqEX7IZ3FspqaZRVpvSMiLaJPrrsWvSO1cUHh/tOVYir64vzO7g4X3ItyJKKEOMvCEBXLQ8knOW6pzxIR9/rCQatFd7PPP87Ao8bxT4tCxRAabAfxd6ObnbmzRi7vDec2BLk6brv0obJxvNUmdTPbqYYUBeIX1qRYwQl623TYKVIGMnihbL2ZnJkGl+6vvl1qedPA0FjMkEYMmB1P/fY=
 jobs:
   include:
-    - stage: test
-      name: (angular)
-      script: ./scripts/angular/test.sh
-    - stage: test
-      name: (api)
-      script: ./scripts/api/test.sh
-    - stage: test
-      name: (email)
-      script: ./scripts/email/test.sh
+    # - stage: test
+        # if: commit_message !~ /chore\(release\)/
+    #   name: (angular)
+    #   script: ./scripts/angular/test.sh
+    # - stage: test
+        # if: commit_message !~ /chore\(release\)/
+    #   name: (api)
+    #   script: ./scripts/api/test.sh
+    # - stage: test
+        # if: commit_message !~ /chore\(release\)/
+    #   name: (email)
+    #   script: ./scripts/email/test.sh
+    - stage: Release
+      if: branch = master AND type != pull_request AND commit_message !~ /chore\(release\)/
+      script: skip
+      deploy:
+        provider: script
+        script: ./scripts/release.sh
+        skip_cleanup: true

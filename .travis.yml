@@ -19,3 +19,11 @@ jobs:
     - stage: test
       name: (email)
       script: ./scripts/email/test.sh
+    - stage: deploy
+      name: Release
+      if: branch = master AND type != pull_request
+      script: skip
+      deploy:
+        provider: script
+        script: git checkout master && lerna version --conventional-commits
+        skip_cleanup: true

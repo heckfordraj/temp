@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="7.0.1"></a>
+## [7.0.1](https://github.com/heckfordraj/temp/compare/v6.0.0...v7.0.1) (2018-09-20)
+
+
+### Features
+
+* **build:** added deploy stage ([c05bf47](https://github.com/heckfordraj/temp/commit/c05bf47))
+
+
+
+
+
 <a name="7.0.0"></a>
 # 7.0.0 (2018-09-20)
 

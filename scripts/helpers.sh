@@ -51,7 +51,7 @@ shouldRunDeploy() {
   }
 
   resetToReleaseCommit() {
-    git checkout ${TRAVIS_COMMIT} -q
+    git checkout ${TRAVIS_COMMIT}
   }
 
   checkoutPreviousCommit

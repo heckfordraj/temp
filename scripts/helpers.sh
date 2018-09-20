@@ -44,3 +44,21 @@ shouldRunTest() {
     return 1;
   fi
 }
+
+shouldRunDeploy() {
+  git checkout HEAD^ -q
+
+  resetToReleaseCommit() {
+    git checkout master -q
+  }
+
+  if isChangedPackage $1; then
+    printf "${GREEN_BG}${BOLD}${WHITE} Deploying ${RESET}"
+    resetToReleaseCommit
+    return 0;
+  else
+    printf "${GREY_BG}${BOLD}${BLACK} Not deploying ${RESET}"
+    resetToReleaseCommit
+    return 1;
+  fi
+}

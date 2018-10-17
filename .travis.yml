@@ -13,7 +13,7 @@ env:
 
 is_release: &is_release branch = master AND type != pull_request AND commit_message =~ /chore\(release\)/
 is_not_release: &is_not_release commit_message !~ /chore\(release\)/
-is_master_is_not_release: &is_master_is_not_release branch = master AND type != pull_request AND commit_message !~ /chore\(release\)/
+is_master_is_buildable_commit: &is_master_is_buildable_commit branch = master AND type != pull_request AND commit_message =~ /(feat|fix|perf|refactor)\(?\w*\)?:/
 
 jobs:
   include:
@@ -25,12 +25,12 @@ jobs:
       # if: *is_not_release
     #   name: (api)
     #   script: ./scripts/api/test.sh
-    - stage: test
-      if: *is_not_release
-      name: (email)
-      script: ./scripts/email/test.sh
+    # - stage: test
+    #   if: *is_not_release
+    #   name: (email)
+    #   script: ./scripts/email/test.sh
     - stage: release
-      if: *is_master_is_not_release
+      if: *is_master_is_buildable_commit
       script: skip
       deploy:
         provider: script
